@@ -1,0 +1,14 @@
+body {
+  background-image: url(usethis.png);
+  background-repeat: no-repeat;
+  margin-left: 14rem;
+  margin-top: 8rem;
+}
+table {
+  margin: 1rem;
+}
+
+#mainContacts > tr > td {
+  height: 2rem;
+  width: 9rem;
+}
