@@ -1,8 +1,14 @@
 body {
-  background-image: url(usethis.png);
-  background-repeat: no-repeat;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(121, 9, 105, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
   margin-left: 14rem;
   margin-top: 8rem;
+  color: #00ffde;
 }
 table {
   margin: 1rem;

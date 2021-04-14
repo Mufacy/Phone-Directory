@@ -1,50 +1,70 @@
 <!DOCTYPE>
 <HTML>
-    <HEAD>
-        <title> Phone book </title>
-        <link rel="stylesheet" href="mainStyle.css"/>
-    </HEAD>
-    <BODY>
-        <div>Create new Contact 
-            <input type="text" placeholder="Name"   id="EDTName">
-            <input type="text" placeholder="Number" id="EDTNumber">
-            <input type="button" value="Create" onclick="newContact()">
-        </div>
-        <br/>
-        <span>Search By Name: &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" id="EDTSearchName" /> 
-                <input type="button" value="go" onclick="searchContactByName();"/> 
-        </span>
-        <br/>
-        <br/>
-        <span>Search By Number: 
-            <input type="text" id="EDTSearchNumber"/> 
-            <input type="button" value="go" onclick="searchContactByPhone();"/> 
-        </span>
-        <div>
-            <br/>   
-            <div style="display:flex;">
+
+<HEAD>
+    <title> Phone book </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+        integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="mainStyle.css" />
+</HEAD>
+
+<BODY>
+    <h1>Mohamad Mouaz AL Midani PhoneBook</h1>
+    <div>Create new Contact
+        <input type="text" placeholder="Name" id="EDTName">
+        <input type="text" placeholder="Number" id="EDTNumber">
+        <input type="button" value="Create" onclick="newContact()">
+    </div>
+    <br />
+    <span>Search By Name: &nbsp;&nbsp;&nbsp;
+        <input type="text" id="EDTSearchName" />
+        <input type="button" value="go" onclick="searchContactByName();" />
+    </span>
+    <br />
+    <br />
+    <span>Search By Number:&nbsp;
+        <input type="text" id="EDTSearchNumber" />
+        <input type="button" value="go" onclick="searchContactByPhone();" />
+    </span>
+    <br />
+    <br />
+    <div>
+        make a Call From:&nbsp;&nbsp;&nbsp;
+        <select id="CallersList" name="SelectExtra" dir="ltr">
+        </select>
+        to:
+        <select id="RecivingCallersList" name="SelectExtra" dir="ltr">
+        </select>
+        <input type="button" value="call" onclick="makeAPhoneCall();">
+    </div>
+    <div>
+        <br />
+        <div style="display:flex;">
             <span style="margin: 1rem; font-weight: bolder;">
                 &nbsp;&nbsp;&nbsp;&nbsp;Contacts List
-                <table id="mainContacts"  border="1" width="40%">  </table>
+                <table id="mainContacts" border="1" width="40%"> </table>
             </span>
 
             <span style="margin: 1rem; font-weight: bolder;">
                 Caller List
-                <table id="CallerLogs"  border="1" width="50%">  </table>
+                <table id="CallerLogs" border="1" width="50%"> </table>
             </span>
-            </div>
         </div>
-        <div>
-            make a call from:
-            <select id="CallersList" name="SelectExtra" dir="ltr">      
-            </select>
-            to:
-            <select id="RecivingCallersList" name="SelectExtra" dir="ltr">     
-            </select>
+    </div>
+    <script type="text/javascript" src="mainScript.js"></scripttype></script>
+</BODY>
 
-            <input type="button" value="call" onclick="makeAPhoneCall();">
-        </div>
-        <script type="text/javascript" src="mainScript.js"></script>
-    </BODY>
 </HTML>
+
+<script id="caller-Template">
+</script>
