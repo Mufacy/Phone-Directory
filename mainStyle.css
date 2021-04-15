@@ -10,11 +10,34 @@ body {
   margin-top: 8rem;
   color: #00ffde;
 }
+
 table {
-  margin: 1rem;
+  border-collapse: inherit;
 }
 
 #mainContacts > tr > td {
   height: 2rem;
   width: 9rem;
+  white-space: nowrap;
+}
+
+#mainContacts > tr > th {
+  white-space: nowrap;
+}
+
+input {
+  color: black;
+}
+button {
+  color: black;
+}
+
+#CallerLogs > tr > td {
+  height: 2rem;
+  width: 9rem;
+  white-space: nowrap;
+}
+
+#CallerLogs > tr > th {
+  white-space: nowrap;
 }
