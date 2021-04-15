@@ -66,5 +66,53 @@
 
 </HTML>
 
-<script id="caller-Template">
+<script id="caller-Template" type="text">
+    <tr>
+        <th>@NAME@</th>
+        <td>@NUMBER@</td>
+
+        <td>
+            <button value="@NAME@" onclick="viewLogs(searchContactByName(this.value));">
+                view Logs
+            </button>
+        </td>
+
+        <td>
+            <button value="@NAME@" onclick="editContactByClick(this.value);">
+                Edit Contact
+            </button>
+        </td>
+
+        <td>
+            <button value="@NAME@" onclick="deleteContactByName(this.value);">
+                Delete Contact
+            </button>
+        </td>
+    </tr>
+</script>
+
+<script id="list-option-Template" type="text">
+    <option value="@NAME@">
+    @NAME@
+    </option>
+</script>
+
+<script id="caller-log-Template" type="text">
+    <tr>
+        <td>
+            @CALLERS@
+        </td>
+
+        <td>
+            @CALLDATE@
+        </td>
+
+        <td>
+            @CALLHIST@
+        </td>
+
+        <td>
+            @HISTDATE@
+        </td>
+    </tr>
 </script>

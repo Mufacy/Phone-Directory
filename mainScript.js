@@ -230,79 +230,36 @@ $(window).on("load", function (e) {
   main();
 });
 
-// reOrderVisuals();
-
 //function to create the contacts grid visually and assign buttons and functions
 function reOrderVisuals() {
   emptyContactGrid();
+
   if (mainContact.next == 0) {
     return;
   }
-  var contactList = $("mainContacts"); //document.getElementById("mainContacts");
-  CellIndex = 0;
+
+  //assign the main node contact
   contact = mainContact;
   do {
-    //move to next Contact and create row
+    //assign the next Contact
     contact = contact.next;
-    var tbl_row = document.createElement("tr");
-    tbl_row.setAttribute("align", "left");
-    contactList.append(tbl_row);
 
-    //create contact name
-    var THeader = document.createElement("th");
-    THeader.innerHTML = contact.name;
-    tbl_row.appendChild(THeader);
+    //get the Contact list template from index.html and replace its macros with data
+    var source = $("#caller-Template").html();
+    source = source.replace(/@NAME@/g, contact.name);
+    source = source.replace(/@NUMBER@/g, contact.number);
 
-    var TDataPhone = document.createElement("td");
-    TDataPhone.innerHTML = contact.number;
-    tbl_row.appendChild(TDataPhone);
-
-    //create dynamically a button to view contact logs
-    var TDataViewLogs = document.createElement("td");
-    TDataViewLogs.setAttribute("id", CellIndex++);
-    var TDataViewLogsButton = document.createElement("button");
-    TDataViewLogsButton.innerText = "View logs";
-    TDataViewLogsButton.setAttribute(
-      "onclick",
-      "viewLogs(searchContactByName(this.value));"
-    );
-    TDataViewLogsButton.setAttribute("value", contact.name);
-    TDataViewLogs.appendChild(TDataViewLogsButton);
-    tbl_row.appendChild(TDataViewLogs);
-
-    //create dynamically a button to edit contact
-    var TDataEdit = document.createElement("td");
-    TDataEdit.setAttribute("id", CellIndex++);
-    var TDataEditButton = document.createElement("button");
-    TDataEditButton.innerText = "Edit Contact";
-    TDataEditButton.setAttribute("onclick", "editContactByClick(this.value);");
-    TDataEditButton.setAttribute("value", contact.name);
-    TDataEdit.appendChild(TDataEditButton);
-    tbl_row.appendChild(TDataEdit);
-
-    //create dynamically a button to delete contact logs
-    var TDataDelete = document.createElement("td");
-    TDataDelete.setAttribute("id", CellIndex++);
-    var TDataDeleteButton = document.createElement("button");
-    TDataDeleteButton.innerText = "Delete Contact";
-    TDataDeleteButton.setAttribute(
-      "onclick",
-      "deleteContactByName(this.value);"
-    );
-    TDataDeleteButton.setAttribute("value", contact.name);
-    TDataDelete.appendChild(TDataDeleteButton);
-    tbl_row.appendChild(TDataDelete);
+    $("#mainContacts").append(source);
 
     //Create the callers and recievers list
-    var listOption = document.createElement("option");
-    listOption.innerHTML = contact.name;
-    listOption.value = contact.name;
-    CallersList.appendChild(listOption);
+    var listOption = $("#list-option-Template").html();
+    listOption = listOption.replace(/@NAME@/g, contact.name);
+    $("#CallersList").append(listOption);
 
-    var listOption = document.createElement("option");
-    listOption.innerHTML = contact.name;
-    listOption.value = contact.name;
-    RecivingCallersList.appendChild(listOption);
+    var listOption = $("#list-option-Template").html();
+    listOption = listOption.replace(/@NAME@/g, contact.name);
+    $("#RecivingCallersList").append(listOption);
+    //
   } while (contact.next != 0);
 }
 
@@ -310,7 +267,6 @@ function emptyContactGrid() {
   $("#mainContacts").empty();
   $("#CallersList").empty();
   $("#RecivingCallersList").empty();
-  $("#CallerLogs").empty();
 }
 
 function makeAPhoneCall() {
@@ -331,89 +287,54 @@ function makeAPhoneCall() {
 }
 
 //TODO: delete this later
-function emptyListGrid() {
-  $("#CallerLogs").empty();
-}
 
 //visually create viewlogs
 function viewLogs(contact) {
-  // emptyListGrid();
-  var n;
+  $("#CallerLogs").empty();
 
-  if (contact.CallerHistory.length > contact.CallHistory.length)
-    n = contact.CallerHistory.length;
-  else n = contact.CallHistory.length;
-
-  var CallersList = document.getElementById("CallerLogs");
-
-  var tbl_row = document.createElement("tr");
-  tbl_row.setAttribute("align", "left");
-  CallersList.appendChild(tbl_row);
-
-  var TDataName = document.createElement("td");
-  TDataName.innerHTML = " Callers ";
-  tbl_row.appendChild(TDataName);
-
-  var TDataName = document.createElement("td");
-  TDataName.innerHTML = " Date ";
-  tbl_row.appendChild(TDataName);
-
-  var TDataName = document.createElement("td");
-  TDataName.innerHTML = " Call History";
-  tbl_row.appendChild(TDataName);
-
-  var TDataName = document.createElement("td");
-  TDataName.innerHTML = " Date ";
-  tbl_row.appendChild(TDataName);
-
+  //find out which list between caller and callers has a bigger length
   callerIndex = contact.CallerHistory.length - 1;
   callIndex = contact.CallHistory.length - 1;
+
+  if (callerIndex > callIndex) var n = callerIndex + 1;
+  else var n = callIndex + 1;
+
+  //Create the table headers
+  $("#CallerLogs").append(
+    "<tr> <th>Callers</th>  <th>Date</th>  <th>Called</th>  <th>Date</th>  </tr>"
+  );
+
+  //loop through the lists and assign the data to the template
   for (var i = n - 1; i >= 0; i--) {
-    //move to next Contact and create row
-    var tbl_row = document.createElement("tr");
-    tbl_row.setAttribute("align", "left");
-    CallersList.appendChild(tbl_row);
-
+    var callerTemp = $("#caller-log-Template").html();
     if (callerIndex >= 0) {
-      alert(
-        "Caller is " +
-          contact.CallerHistory[i][0] +
-          " " +
-          contact.CallerHistory[i][1]
+      callerTemp = callerTemp.replace(
+        /@CALLERS@/g,
+        contact.CallerHistory[callerIndex][0]
       );
-      var TDataName = document.createElement("td");
-      TDataName.innerHTML = contact.CallerHistory[callerIndex][0];
-      tbl_row.appendChild(TDataName);
-
-      var TDataName = document.createElement("td");
-      TDataName.innerHTML = contact.CallerHistory[callerIndex--][1];
-      tbl_row.appendChild(TDataName);
+      callerTemp = callerTemp.replace(
+        /@CALLDATE@/g,
+        contact.CallerHistory[callerIndex--][1]
+      );
     } else {
-      var TDataName = document.createElement("td");
-      TDataName.innerHTML = "";
-      tbl_row.appendChild(TDataName);
-
-      var TDataName = document.createElement("td");
-      TDataName.innerHTML = "";
-      tbl_row.appendChild(TDataName);
+      callerTemp = callerTemp.replace(/@CALLERS@/g, " ");
+      callerTemp = callerTemp.replace(/@CALLDATE@/g, " ");
     }
 
     if (callIndex >= 0) {
-      var TDataName = document.createElement("td");
-      TDataName.innerHTML = contact.CallHistory[callIndex][0];
-      tbl_row.appendChild(TDataName);
-
-      var TDataName = document.createElement("td");
-      TDataName.innerHTML = contact.CallHistory[callIndex--][1];
-      tbl_row.appendChild(TDataName);
+      callerTemp = callerTemp.replace(
+        /@CALLHIST@/g,
+        contact.CallHistory[callIndex][0]
+      );
+      callerTemp = callerTemp.replace(
+        /@HISTDATE@/g,
+        contact.CallHistory[callIndex--][1]
+      );
     } else {
-      var TDataName = document.createElement("td");
-      TDataName.innerHTML = "";
-      tbl_row.appendChild(TDataName);
-
-      var TDataName = document.createElement("td");
-      TDataName.innerHTML = "";
-      tbl_row.appendChild(TDataName);
+      callerTemp = callerTemp.replace(/@CALLHIST@/g, " ");
+      callerTemp = callerTemp.replace(/@HISTDATE@/g, " ");
     }
+
+    $("#CallerLogs").append(callerTemp);
   }
 }
