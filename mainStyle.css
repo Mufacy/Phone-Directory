@@ -31,6 +31,9 @@ input {
 button {
   color: black;
 }
+select {
+  color: black;
+}
 
 #CallerLogs > tr > td {
   height: 2rem;
